@@ -19,7 +19,18 @@ export async function registerUser (req: Request, res: Response) {
 }
 
 export async function loginUser(req:Request, res: Response){
-  const userData = req.body
 
-  const 
+  const userData = req.body
+  const emailExists = await userService.verifyEmailAvailability(userData.email)
+    if(!emailExists){
+      return res.sendStatus(401)
+    }
+
+  const sessionToken = await userService.registerSession(userData)
+  if(sessionToken === null){
+    return res.sendStatus(401)
+  }
+  
+  res.send({token: sessionToken})
+
 }
