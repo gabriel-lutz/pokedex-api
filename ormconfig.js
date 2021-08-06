@@ -13,6 +13,7 @@ module.exports = {
   },
   extra: {
     ssl: {
+      require:true,
       rejectUnauthorized: false,
     }
   }
