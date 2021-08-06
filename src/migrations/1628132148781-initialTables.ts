@@ -1,5 +1,7 @@
 import {MigrationInterface, QueryRunner} from "typeorm";
 
+
+
 export class initialTables1628132148781 implements MigrationInterface {
     name = 'initialTables1628132148781'
 

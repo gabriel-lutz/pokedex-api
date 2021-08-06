@@ -12,7 +12,7 @@ export default class User {
   @Column()
   password: string;
 
-  @ManyToMany(()=>Pokemon)
+  @ManyToMany(()=>Pokemon, pokemon => pokemon.users)
   @JoinTable()
   pokemons: Pokemon[]
 }
