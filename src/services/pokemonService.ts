@@ -24,3 +24,18 @@ export async function getPokemonsListWithMyPokemons(aux: number[]){
 
     return result
 }
+
+export async function addToList(userId: number, pokemonId: number){
+    try{
+        const user = await getRepository(User).findOne({where: {id: userId}, relations:["pokemons"]})
+        const pokemon = await getRepository(Pokemon).findOne({where: {id: pokemonId}})
+        
+        user.pokemons.push(pokemon)
+
+        await getRepository(User).save(user)
+
+    }catch(err){
+        console.log(err)
+
+    }
+}

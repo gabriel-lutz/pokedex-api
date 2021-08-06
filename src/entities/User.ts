@@ -12,7 +12,10 @@ export default class User {
   @Column()
   password: string;
 
-  @ManyToMany(()=>Pokemon, pokemon => pokemon.users)
+  @ManyToMany(()=>Pokemon, pokemon => pokemon.users,
+    {
+      cascade: true
+  })
   @JoinTable()
   pokemons: Pokemon[]
 }
