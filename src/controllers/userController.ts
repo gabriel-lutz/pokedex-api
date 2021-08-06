@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 import * as userService from "../services/userService";
 
 export async function registerUser (req: Request, res: Response) {
+  try{
     const userData = req.body
 
     const emailInUse = await userService.verifyEmailAvailability(userData.email)
@@ -16,21 +17,28 @@ export async function registerUser (req: Request, res: Response) {
     }
 
     return res.sendStatus(201);
+  }catch(err){
+    console.log(err)
+    res.sendStatus(500)
+  }
 }
 
 export async function loginUser(req:Request, res: Response){
+  try{
+    const userData = req.body
+    const emailExists = await userService.verifyEmailAvailability(userData.email)
+      if(!emailExists){
+        return res.sendStatus(401)
+      }
 
-  const userData = req.body
-  const emailExists = await userService.verifyEmailAvailability(userData.email)
-    if(!emailExists){
+    const sessionToken = await userService.registerSession(userData)
+    if(sessionToken === null){
       return res.sendStatus(401)
     }
 
-  const sessionToken = await userService.registerSession(userData)
-  if(sessionToken === null){
-    return res.sendStatus(401)
+    res.send({token: sessionToken})
+  }catch(err){
+    console.log(err)
+    res.sendStatus(500)
   }
-  
-  res.send({token: sessionToken})
-
 }

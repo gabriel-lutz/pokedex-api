@@ -18,6 +18,7 @@ app.post("/sign-up", validateSignupBody, userController.registerUser)
 app.post("/sign-in",validateSignupBody, userController.loginUser)
 app.get("/pokemons", validateToken, pokemonController.getPokemonsList)
 app.post("/my-pokemons/:id/add", validateToken, pokemonController.addPokemonToMyList)
+app.post("/my-pokemons/:id/remove", validateToken, pokemonController.removePokemonFromMyList)
 
 export async function init () {
   await connectDatabase();
